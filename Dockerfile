@@ -18,7 +18,10 @@ RUN curl -o /usr/local/bin/composer https://getcomposer.org/composer.phar && chm
 RUN curl https://getcaddy.com | bash -s personal
 
 RUN yarn global add webpack cross-env laravel-mix gulp
-    
-RUN yarn install \
-	&& yarn run dev \
-	&& composer install
+
+RUN echo "post_max_size=1G" > /usr/local/etc/php/php.ini \
+    && echo "upload_max_filesize=1G" >> /usr/local/etc/php/php.ini \
+    && echo "max_file_uploads=100" >> /usr/local/etc/php/php.ini \
+    && echo "session.gc_maxlifetime=9999" >> /usr/local/etc/php/php.ini \
+    && echo "session.cache-expire=9999" >> /usr/local/etc/php/php.ini \
+    && echo "session.cookie-lifetime=9999" >> /usr/local/etc/php/php.ini
